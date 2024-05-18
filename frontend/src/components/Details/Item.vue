@@ -6,17 +6,15 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner bg-light">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+                            <img class="w-100 h-100" :src="product.image_1 ? require('@/assets/images/' + product.image_1) : ''" alt="Image">
                         </div>
                         <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
+                            <img class="w-100 h-100" :src="product.image_1 ? require('@/assets/images/' + product.image_2) : ''" alt="Image">
                         </div>
                         <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-3.jpg" alt="Image">
+                            <img class="w-100 h-100" :src="product.image_1 ? require('@/assets/images/' + product.image_3) : ''" alt="Image">
                         </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
-                        </div>
+                        
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -29,7 +27,7 @@
 
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
-                    <h3>Product Name Goes Here</h3>
+                    <h3>{{ product.name }}</h3>
                     <div class="d-flex mb-3">
                         <div class="text-custom mr-2">
                             <small class="fas fa-star"></small>
@@ -40,10 +38,16 @@
                         </div>
                         <small class="pt-1">(99 Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-                    <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                        clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                        Nonumy</p>
+                    <!-- <h3 class="font-weight-semi-bold mb-4">${{ product.price }}</h3> -->
+                    
+                    <div class="font-weight-semi-bold mb-4">
+                        <div >
+                            <h2 style="display: inline-block;">${{ product.discount ? product.price - product.discount : product.price }}</h2>
+                            <h4 style="display: inline-block;" v-if="product.discount > 0" class="text-danger ml-2"><del>${{ Math.trunc(product.price)}}</del></h4>
+                        </div>
+                    </div>
+
+                    <p class="mb-4">{{ product.description }}</p>
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
                         <form>
@@ -242,9 +246,37 @@
     </div>
     <!-- Shop Detail End -->
 </template>
+
 <script>
+import axios from 'axios';
+
 export default {
-    name:'ItemComponent'
+    name: 'ItemComponent',
+    data(){
+        return{
+            product:{},
+        }
+    },
+    props: {
+        productId: {
+            type: String,
+            required: true
+        }
+    },
+    created(){
+        this.getProduct();
+    },
+    methods:{
+        async getProduct(){
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/productDetails/'+this.productId);
+                this.product = response.data.product
+                console.log(this.product)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 }
 </script>
 <style lang="">

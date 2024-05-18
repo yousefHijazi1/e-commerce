@@ -6,7 +6,7 @@
 
     <RecentProducts/>
     
-    <Offer/>
+    <!-- <Offer/> -->
     
     <Products/>
 
@@ -22,7 +22,7 @@ import Footer from '@/components/Footer.vue';
 import Carousel from '@/components/Home/Carousel.vue';
 import Feature from '@/components/Home/Feature.vue';
 import Products from '@/components/Home/Products.vue';
-import Offer from '@/components/Home/Offer.vue';
+// import Offer from '@/components/Home/Offer.vue';
 import RecentProducts from '@/components/Home/RecentProducts.vue';
 import Vendor from '@/components/Home/Vendor.vue';
 import Swiper from '@/components/Home/Swiper.vue';
@@ -37,7 +37,7 @@ export default {
     Carousel,
     Feature,
     Products,
-    Offer,
+    // Offer,
     RecentProducts,
     Vendor,
     carousel,
