@@ -1,11 +1,17 @@
 <template lang="">
-    <div>
-        <h1>Cart</h1>
-    </div>
+    <BreadCrumb/>
+    <CartComponent/>
 </template>
+
 <script>
+import BreadCrumb from '@/components/Cart/BreadCrumb.vue';
+import CartComponent from '@/components/Cart/CartComponent.vue';
 export default {
-    name:'CartView'
+    name:'CartView',
+    components:{
+        BreadCrumb,
+        CartComponent
+    }
 }
 </script>
 <style lang="">

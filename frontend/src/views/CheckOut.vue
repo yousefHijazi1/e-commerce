@@ -1,13 +1,21 @@
 <template lang="">
-    <div>
-        <h1>Checkout</h1>
-    </div>
+    <BreadCrumb/>
+    <CheckoutComponent/>
 </template>
+
 <script>
+import BreadCrumb from '@/components/Checkout/BreadCrumb.vue';
+import CheckoutComponent from '@/components/Checkout/CheckoutComponent.vue';
+
 export default {
-    name:'CheckoutView'
+    name:'CheckoutView',
+    components:{
+        BreadCrumb,
+        CheckoutComponent
+    }
 }
 </script>
+
 <style lang="">
     
 </style>

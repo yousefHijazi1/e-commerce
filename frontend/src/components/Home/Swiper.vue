@@ -5,6 +5,7 @@
             :modules="autoplay"
             :autoplay="{delay:3000}"
             :space-between="50"
+            :loop="true"
             @swiper="onSwiper"
             @slideChange="onSlideChange"
         >

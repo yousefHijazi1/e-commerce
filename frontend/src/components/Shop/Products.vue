@@ -12,9 +12,9 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Latest</a>
-                                        <a class="dropdown-item" href="#">Popularity</a>
-                                        <a class="dropdown-item" href="#">Best Rating</a>
+                                        <button class="dropdown-item" href="#">Latest</button>
+                                        <button class="dropdown-item" href="#">Top Sellers</button>
+                                        <button class="dropdown-item" href="#">Best Rating</button>
                                     </div>
                                 </div>
                                 <div class="btn-group ml-2">
@@ -53,19 +53,16 @@
                             </div>
                         </div>
                     </router-link >
-
-                    
-                    
                     
                     <div class="col-12">
                         <nav>
-                          <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                          </ul>
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
                         </nav>
                     </div>
                 </div>
