@@ -1,9 +1,12 @@
 <template>
-    <div class="swiper-container-wrapper">
+    <div class="swiper-container-wrapper" id="swiper" >
         <swiper 
             :slides-per-view="4"
-            :modules="autoplay"
-            :autoplay="{delay:3000}"
+            :modules="modules"
+            :autoplay="{
+                delay: 2500,
+                disableOnInteraction: false,
+            }"
             :space-between="50"
             :loop="true"
             @swiper="onSwiper"
@@ -20,17 +23,19 @@
 
     </div>
 </template>
+
 <script>
     
     import { Swiper, SwiperSlide } from 'swiper/vue';
     import 'swiper/css';
 
-// Import Swiper core styles
-import 'swiper/css/bundle';
+    // Import Swiper core styles
+    import 'swiper/css/bundle';
 
     // Import Swiper styles
     import 'swiper/css';
-    import { Autoplay } from 'swiper';
+    import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
     export default {
     name: 'SwiperComponent',
         components: {
@@ -50,16 +55,15 @@ import 'swiper/css/bundle';
         return {
             onSwiper,
             onSlideChange,
-            autoplay
+            autoplay,
+            modules: [Autoplay, Pagination, Navigation],
         };
         },
     };
 </script>
 
 <style scoped>
-
-    .swiper-container-wrapper{
+    #swiper{
         background-color: rgb(244, 244, 244);
     }
-
 </style>
