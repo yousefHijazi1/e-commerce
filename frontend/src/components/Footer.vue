@@ -63,9 +63,9 @@
                     <a class="text-custom font-weight-bold" href="https://yousefhijazi1.github.io/" >Yousef Hijazi</a>
                 </p>
             </div>
-            <div class="col-md-6 px-xl-0 text-center text-md-right">
+            <!-- <div class="col-md-6 px-xl-0 text-center text-md-right">
                 <img class="img-fluid" src="img/payments.png" alt="">
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Footer End -->

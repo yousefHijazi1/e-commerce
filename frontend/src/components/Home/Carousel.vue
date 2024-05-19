@@ -15,8 +15,7 @@
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Laptops</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Upgrade to the latest in technology with our top-of-the-line laptops.
-                                        Designed for performance and built to last,our laptops are perfect for work, play, and everything in between.</p>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">{{ truncatedDescriptions.laptops }}</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
                                 </div>
                             </div>
@@ -26,8 +25,7 @@
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Playstations</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Step into the world of endless entertainment with the latest PlayStation console.
-                                        Whether you're a hardcore gamer or just looking for some fun, PlayStation offers something for everyone.</p>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">{{ truncatedDescriptions.playstations }}</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
                                 </div>
                             </div>
@@ -37,8 +35,7 @@
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Accessories</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Upgrade your setup with our wide range of high-quality computer and laptop accessories.
-                                        From productivity boosters to essential gadgets, we have everything you need to optimize your tech experience.</p>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">{{ truncatedDescriptions.accessories }}</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="#">Shop Now</a>
                                 </div>
                             </div>
@@ -68,11 +65,51 @@
     </div>
     <!-- Carousel End -->
 </template>
+
 <script>
 export default {
-    name: 'CarouselComponent'
-}
+    name: 'CarouselComponent',
+    data() {
+        return {
+            descriptions: {
+                laptops: 'Upgrade to the latest in technology with our top of the line laptops. Designed for performance and built to last, our laptops are perfect for work, play, and everything in between.',
+                playstations: 'Step into the world of endless entertainment with the latest PlayStation console. Whether you are a hardcore gamer or just looking for some fun, PlayStation offers something for everyone.',
+                accessories: 'Upgrade your setup with our wide range of high quality computer and laptop accessories. From productivity boosters to essential gadgets, we have everything you need to optimize your tech experience.'
+            },
+            windowWidth: window.innerWidth
+        };
+    },
+    computed: {
+        truncatedDescriptions() {
+            if (this.windowWidth < 570) {
+                return {
+                    laptops: this.truncateText(this.descriptions.laptops, 60),
+                    playstations: this.truncateText(this.descriptions.playstations, 60),
+                    accessories: this.truncateText(this.descriptions.accessories, 60)
+                };
+            }
+            return this.descriptions;
+        }
+    },
+    methods: {
+        truncateText(text, length) {
+            return text.length > length ? text.substring(0, length) + ' ...' : text;
+        },
+        updateWindowWidth() {
+            this.windowWidth = window.innerWidth;
+        }
+    },
+    mounted() {
+        window.addEventListener('resize', this.updateWindowWidth);
+    },
+    beforeunmount() {
+        window.removeEventListener('resize', this.updateWindowWidth);
+    }
+};
 </script>
+
+
+
 <style lang="">
     
 </style>

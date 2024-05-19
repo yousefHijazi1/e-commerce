@@ -6,7 +6,7 @@
                 <nav class="breadcrumb bg-light mb-30">
                     <router-link to="/" class="breadcrumb-item text-dark" >Home</router-link>
                     <router-link to="/shop" class="breadcrumb-item text-dark" >Shop</router-link>
-                    <span class="breadcrumb-item active">Product Details</span>
+                    <span class="breadcrumb-item active">Shop List</span>
                 </nav>
             </div>
         </div>
@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-    name:'BreadComponent'
+    name: 'BreadCrumb'
 }
 </script>
 <style lang="">

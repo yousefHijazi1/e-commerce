@@ -142,15 +142,15 @@
                             </div>
                             <router-link to="/"  class="nav-item nav-link active">Home</router-link>
                             
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <router-link to="/shop" class="nav-item nav-link">Shop</router-link>
                             
                             
                             
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
-                                <div class="dropdown-menu bg-custom rounded-0 border-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                <div class="dropdown-menu bg-custom rounded-0 border-0 m-0" id="pages">
+                                    <router-link to="/cart"  class="dropdown-item" id="cart">Shopping Cart</router-link>
+                                    <router-link to="/checkout" class="dropdown-item" id="checkout">Checkout</router-link>
                                 </div>
                             </div>
                             <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
@@ -197,5 +197,19 @@ export default {
 
 </script>
 <style>
-
+    #pages{
+        background-color: #446084;
+    }
+    #cart{
+        color: aliceblue;
+    }
+    #cart:hover{
+        color: #446084;
+    }
+    #checkout{
+        color: aliceblue;
+    }
+    #checkout:hover{
+        color: #446084;
+    }
 </style>

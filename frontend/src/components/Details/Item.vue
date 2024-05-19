@@ -8,10 +8,10 @@
                         <div class="carousel-item active">
                             <img class="w-100 h-100" :src="product.image_1 ? require('@/assets/images/' + product.image_1) : ''" alt="Image">
                         </div>
-                        <div class="carousel-item">
+                        <div v-if="product.image_2" class="carousel-item">
                             <img class="w-100 h-100" :src="product.image_1 ? require('@/assets/images/' + product.image_2) : ''" alt="Image">
                         </div>
-                        <div class="carousel-item">
+                        <div v-if="product.image_3" class="carousel-item">
                             <img class="w-100 h-100" :src="product.image_1 ? require('@/assets/images/' + product.image_3) : ''" alt="Image">
                         </div>
                         
@@ -105,7 +105,7 @@
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                            <input type="text" class="form-control bg-light border-0 text-center" value="1">
                             <div class="input-group-btn">
                                 <button class="btn btn-custom btn-plus">
                                     <i class="fa fa-plus"></i>
