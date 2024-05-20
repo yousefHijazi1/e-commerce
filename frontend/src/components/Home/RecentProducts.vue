@@ -16,16 +16,15 @@
                             <h5>${{ product.discount ? product.price - product.discount : Math.trunc(product.price) }}</h5>
                             <h6 v-if="product.discount > 0" class="text-muted ml-2"><del>${{ Math.trunc(product.price) }}</del></h6>
                         </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
+                        <!-- <div class="d-flex align-items-center justify-content-center mb-1">
                             <small class="fa fa-star text-custom mr-1"></small>
                             <small class="fa fa-star text-custom mr-1"></small>
                             <small class="fa fa-star text-custom mr-1"></small>
                             <small class="fa fa-star text-custom mr-1"></small>
                             <small class="fa fa-star text-custom mr-1"></small>
-                            <!-- <small>(99)</small> -->
-                        </div>
-                        <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i></button>
-                        <button class="btn btn-custom px-3"><i class="fa fa-heart mr-1"></i></button>
+                            <small>(99)</small>
+                        </div> -->
+                        <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
                     </div>
                 </div>
             </router-link>

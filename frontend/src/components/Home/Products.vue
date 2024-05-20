@@ -7,7 +7,7 @@
                 <router-link :to="{ name: 'details', params: { id: product.id } }" v-for="product in products" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
                     <div class="product-item bg-light mb-4">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
+                            <img class="img-fluid w-100 " :src="require('@/assets/images/'+ product.image_1 )" alt="">
                             <!-- <div class="product-action">
                             </div> -->
                         </div>
@@ -25,8 +25,8 @@
                                 <small class="fa fa-star text-custom mr-1"></small>
                                 <!-- <small>(99)</small> -->
                             </div>
-                            <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i></button>
-                            <button class="btn btn-custom px-3"><i class="fa fa-heart mr-1"></i></button>
+                            <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
+                            
                         </div>
                     </div>
                 </router-link>

@@ -6,7 +6,7 @@ import Auth from '../views/Auth'
 import Cart from '../views/Cart';
 import Checkout from '../views/Checkout';
 import Shop from '../views/Shop';
-
+import Category from '../views/Category';
 
 const routes = [
   {
@@ -44,6 +44,11 @@ const routes = [
     name:'shop',
     component:Shop
   },
+  {
+    path:'/category/:category',
+    name:'category',
+    component:Category
+  }
   
 ]
 

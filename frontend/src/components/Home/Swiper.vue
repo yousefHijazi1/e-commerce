@@ -4,7 +4,7 @@
             :slides-per-view="4"
             :modules="modules"
             :autoplay="{
-                delay: 2500,
+                delay: 2000,
                 disableOnInteraction: false,
             }"
             :space-between="50"
@@ -51,11 +51,10 @@
             console.log('slide change');
         };
         
-        const autoplay = Autoplay; // Import the Autoplay module
+        
         return {
             onSwiper,
             onSlideChange,
-            autoplay,
             modules: [Autoplay, Pagination, Navigation],
         };
         },

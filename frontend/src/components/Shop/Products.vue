@@ -95,6 +95,10 @@ export default {
                 console.log(error)
             }
         },
+
+        async getByCategory(){
+            
+        },
         truncateText(text, length) {
             return text.length > length ? text.substring(0, length) + ' ...' : text;
         },

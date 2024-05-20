@@ -9699,9 +9699,9 @@
     transform: scale(1.2);
   }
   
-  .product-item .btn:hover {
+  /* .product-item .btn:hover {
     color: #FFD333 !important;
-  }
+  } */
   
   .table.table-borderless thead tr,
   .table.table-borderless tbody tr:not(:last-child) {

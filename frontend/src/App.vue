@@ -51,25 +51,14 @@
         </div>
         
         <div class="row align-items-center py-3 px-xl-5 d-none d-lg-flex">
-            <div class="col-lg-4">
+            <div class="col-lg-8">
                 <router-link to="/" class="text-decoration-none">
                     <span class="h1 text-uppercase text-light bg-custom px-2">Multi</span>
                     <span class="h1 text-uppercase text-custom bg-light px-2 ml-n1">Shop</span>
                 </router-link>
             </div>
-            <div class="col-lg-4 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for products">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-custom">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-4 col-6 text-right">
+            
+            <div class="col-lg-4 col-6 text-right" id="customer_service">
                 <p class="m-0">Customer Service</p>
                 <h5 class="m-0">+961 81 086 955</h5>
             </div>
@@ -79,7 +68,7 @@
     <!-- Topbar End -->
 
     <!-- Navbar Start -->
-    <div class="container-fluid bg-dark mb-30">
+    <div class="container-fluid bg-dark mb-3">
         <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a class="btn d-flex align-items-center justify-content-between bg-custom w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
@@ -104,8 +93,8 @@
                                 <a href="" class="dropdown-item">Used PC</a>
                             </div>
                         </div>
-                        <a href="" class="nav-item nav-link">Playsations</a>
-                        <a href="" class="nav-item nav-link">Accessories</a>
+                        <router-link to="/category/playstations"  class="nav-item nav-link">Playstations</router-link>
+                        <router-link to="/category/accessories"  class="nav-item nav-link">Accessories</router-link>
                         
                     </div>
                 </nav>
@@ -126,8 +115,9 @@
                                 <div class="dropdown-menu bg-custom rounded-0 border-0 m-0">
                                         <!-- <a href="" class="dropdown-item"></a> -->
                                         
-                                        <a href="" class="dropdown-item">Playsations</a>
-                                        <a href="" class="dropdown-item">Accessories</a>
+                                        <router-link to="/category/playstations"  class="dropdown-item">Playstations</router-link>
+                                        <router-link to="/category/accessories"  class="dropdown-item">Accessories</router-link>
+                                        
                                         <div class=" dropdown-item">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Laptops <i class="fa fa-angle-down mt-1"></i></a>
                                             <div class="dropdown-menu bg-custom rounded-0 border-0 m-0">
@@ -171,6 +161,24 @@
             </div>
         </div>
     </div>
+
+    <div class="mb-2 mt-2">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-left">
+            <form @submit.prevent="search">
+                <div class="input-group">
+                <input ref="input" type="text" class="form-control" placeholder="Search for products" v-model="searchInput" @input="fetchCategories">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-custom">
+                    <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                </div>
+            </form>
+            <ul v-if="showSuggestions" class="list-group">
+                <router-link id="suggestion" v-for="category in categories" :key="category" :to="'/category/' + category" class="list-group-item">{{ category }}</router-link>
+            </ul>
+        </div>
+    </div>
     <!-- Navbar End -->
 
     <router-view>
@@ -180,11 +188,6 @@
 
 <script>
 export default {
-    data() {
-        return {
-            displayCategories: false // Initially set to true
-        };
-    },
     mounted() {
         // Check screen size when component is mounted
         if (window.innerWidth < 990) {
@@ -193,6 +196,35 @@ export default {
             this.displayCategories = false; // Set displayCategories to true if screen is 992px or larger
         }
     },
+    data() {
+    return {
+        searchInput: '', // Rename to searchInput
+        categories: [],
+        showSuggestions: false
+    };
+},
+methods: {
+    search() {
+        // Navigate to the category route
+        console.log(this.searchInput); // Ensure the value is logged correctly
+        this.$router.push({ path: `/category/${this.searchInput}` });
+        this.searchInput = '';
+        this.showSuggestions = false
+    },
+    async fetchCategories() {
+    // Fetch categories based on search input
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/getCategories/${this.searchInput}`);
+        const data = await response.json();
+        console.log(data);
+        this.categories = data.categories;
+        this.showSuggestions = true;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+},
+
+}
 };
 
 </script>
@@ -212,4 +244,13 @@ export default {
     #checkout:hover{
         color: #446084;
     }
+
+    #suggestion{
+        text-decoration: none
+    }
+
+    #suggestion:hover{
+        text-decoration: none
+    }
+    
 </style>
