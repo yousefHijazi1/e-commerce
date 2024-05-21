@@ -13,11 +13,13 @@
     </div>
     <!-- Breadcrumb End -->
 </template>
+
 <script>
 export default {
     name: 'BreadCrumb'
 }
 </script>
-<style lang="">
+
+<style>
     
 </style>

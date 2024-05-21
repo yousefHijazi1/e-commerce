@@ -30,11 +30,13 @@
     </div>
     <!-- Featured End -->
 </template>
+
 <script>
 export default {
     name: 'FeatureComponent'
 }
 </script>
+
 <style lang="">
     
 </style>

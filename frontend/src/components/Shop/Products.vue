@@ -54,7 +54,7 @@
                         </div>
                     </router-link >
                     
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                         <nav>
                             <ul class="pagination justify-content-center">
                                 <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
@@ -64,12 +64,14 @@
                                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
                             </ul>
                         </nav>
-                    </div>
+                    </div> -->
+                    
                 </div>
             </div>
             <!-- Shop Product End -->
     
 </template>
+
 <script>
 import axios from 'axios';
 
@@ -88,16 +90,12 @@ export default {
     methods:{
         async getProducts(){
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/allProducts');
-                this.products = response.data.products
+                const response = await axios.get('http://127.0.0.1:8000/api/recentProducts');
+                this.products = response.data.recent_products
                 console.log(this.products)
             } catch (error) {
                 console.log(error)
             }
-        },
-
-        async getByCategory(){
-            
         },
         truncateText(text, length) {
             return text.length > length ? text.substring(0, length) + ' ...' : text;
@@ -105,6 +103,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
     #card{
         text-decoration:none

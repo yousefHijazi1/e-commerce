@@ -6,7 +6,7 @@
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
-                <!-- Price Start -->
+                <!-- Price Filter -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by price</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -45,7 +45,7 @@
                 </div>
                 <!-- Price End -->
                 
-                <!-- Color Start -->
+                <!-- Shipping Filter -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by shipping</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -66,7 +66,7 @@
                         </div>
                     </form>
                 </div>
-                <!-- Color End -->
+                <!-- Shipping End -->
 
                 <!-- Size Start -->
                 <!-- <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by size</span></h5>

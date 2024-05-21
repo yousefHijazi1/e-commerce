@@ -44,46 +44,31 @@
                 </div>
                 <!-- Price End -->
                 
-                <!-- Color Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by color</span></h5>
+                <!-- Shipping Filter -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by shipping</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" checked id="color-all">
-                            <label class="custom-control-label" for="price-all">All Color</label>
+                            <label class="custom-control-label" for="price-all">All Shipping </label>
                             <span class="badge border font-weight-normal">1000</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="color-1">
-                            <label class="custom-control-label" for="color-1">Black</label>
+                            <label class="custom-control-label" for="color-1">Free Shipping</label>
                             <span class="badge border font-weight-normal">150</span>
                         </div>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                             <input type="checkbox" class="custom-control-input" id="color-2">
-                            <label class="custom-control-label" for="color-2">White</label>
+                            <label class="custom-control-label" for="color-2">Fast Shipping</label>
                             <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="color-3">
-                            <label class="custom-control-label" for="color-3">Red</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="color-4">
-                            <label class="custom-control-label" for="color-4">Blue</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="color-5">
-                            <label class="custom-control-label" for="color-5">Green</label>
-                            <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
                 </div>
-                <!-- Color End -->
+                <!-- Shipping End -->
 
                 <!-- Size Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by size</span></h5>
+                <!-- <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Filter by size</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
@@ -117,7 +102,7 @@
                             <span class="badge border font-weight-normal">168</span>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- Size End -->
             </div>
             <!-- Shop Sidebar End -->

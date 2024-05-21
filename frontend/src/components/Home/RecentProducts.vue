@@ -3,7 +3,7 @@
     <div class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-light pr-3">Recent Products</span></h2>
         <div class="row px-xl-5">
-            <router-link :to="{ name: 'details', params: { id: product.id } }" v-for="product in recent_products" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
+            <router-link :to="{ name: 'details', params: { id: product.id } }" v-for="product in displayedProducts" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
@@ -46,6 +46,13 @@ export default {
     },
     created(){
         this.getRecents();
+    },
+
+    computed: {
+        displayedProducts() {
+            // Slice the recent_products array to contain only the first 8 items
+            return this.recent_products.slice(0, 8);
+        }
     },
     methods:{
         async getRecents(){

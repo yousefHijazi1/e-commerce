@@ -26,11 +26,13 @@
     </div>
     <!-- Offer End -->
 </template>
+
 <script>
 export default {
     name: 'OfferComponent'
 }
 </script>
+
 <style lang="">
     
 </style>
