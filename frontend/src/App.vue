@@ -166,7 +166,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 text-left">
             <form @submit.prevent="search">
                 <div class="input-group">
-                <input ref="input" type="text" class="form-control" placeholder="Search for products" v-model="searchInput" @input="fetchCategories">
+                <input ref="input" type="text" class="form-control" placeholder="Search for products" v-model="searchInput" @input="suggestedNames">
                 <div class="input-group-append">
                     <span class="input-group-text bg-transparent text-custom">
                     <i class="fa fa-search"></i>
@@ -174,8 +174,11 @@
                 </div>
                 </div>
             </form>
+
             <ul v-if="showSuggestions" class="list-group">
-                <router-link id="suggestion" v-for="category in categories" :key="category" :to="'/category/' + category" class="list-group-item">{{ category }}</router-link>
+                <li class="list-group-item" v-for="product in products" :key="product" @click="selectProduct(product)">
+                    {{ product }}
+                </li>
             </ul>
         </div>
     </div>
@@ -199,32 +202,52 @@ export default {
     data() {
     return {
         searchInput: '', // Rename to searchInput
-        categories: [],
+        products: [],
         showSuggestions: false
     };
 },
 methods: {
     search() {
-        // Navigate to the category route
-        console.log(this.searchInput); // Ensure the value is logged correctly
-        this.$router.push({ path: `/category/${this.searchInput}` });
-        this.searchInput = '';
-        this.showSuggestions = false
-    },
-    async fetchCategories() {
-    // Fetch categories based on search input
-    try {
-        const response = await fetch(`http://127.0.0.1:8000/api/getCategories/${this.searchInput}`);
-        const data = await response.json();
-        console.log(data);
-        this.categories = data.categories;
-        this.showSuggestions = true;
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-},
+        //Navigate to Gategoriy view with search input without suggestion
+        fetch(`http://127.0.0.1:8000/api/getProductCategory/${this.searchInput}`)
+                .then(response => response.json())
+                .then(data => {
+                        const category = data.category; // Access category from the response data
+                        this.showSuggestions = false;
+                        this.$router.push({ path: `/category/${category}` });
+                        this.searchInput = '';
+                    })
+                .catch(error => console.error('Error fetching category:', error));
+        },
 
-}
+    async suggestedNames() {
+    // Fetch categories based on search input
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/getProductsNames/${this.searchInput}`);
+            const data = await response.json();
+            
+            this.products = data.productsNames;
+            this.showSuggestions = true;
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            }
+        },
+        
+        selectProduct(product) {
+        // Set the search input to the selected product name
+        this.searchInput = product;
+
+        // Navigate to the category route when a suggestion is clicked
+        fetch(`http://127.0.0.1:8000/api/getProductCategory/${product}`)
+            .then(response => response.json())
+            .then(data => {
+                    const category = data.category; // Access category from the response data
+                    this.showSuggestions = false;
+                    this.$router.push({ path: `/category/${category}` });
+                })
+            .catch(error => console.error('Error fetching category:', error));
+        },
+    }
 };
 
 </script>

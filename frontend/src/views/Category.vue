@@ -107,7 +107,7 @@
                 <!-- Size End -->
             </div>
             <!-- Shop Sidebar End -->
-            <Products :category="category"/> 
+            <Products :category="category" :searchInput="searchInput"/> 
         </div>
     </div>
     <!-- Shop End -->
@@ -124,6 +124,7 @@
             BreadCrumb,
             Products
         },
+        
         data(){
             return{
                 category:'',
@@ -132,6 +133,8 @@
         created(){
             this.category = this.$route.params.category;
         },
+
+        
         
 
     }

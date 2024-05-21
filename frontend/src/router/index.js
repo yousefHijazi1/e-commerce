@@ -47,7 +47,8 @@ const routes = [
   {
     path:'/category/:category',
     name:'category',
-    component:Category
+    component:Category,
+    
   }
   
 ]

@@ -22,5 +22,6 @@ Route::get('/allProducts',[ProductsController::class,'allProducts']);
 Route::get('/recentProducts',[ProductsController::class,'recentProducts']);
 Route::get('/productDetails/{id}',[ProductsController::class,'productDetails']);
 Route::get('/products/category/{category}', [ProductsController::class, 'productsByCategory']);
-Route::get('/getCategories/{searchItem}',[ProductsController::class,'getCategories']);
+Route::get('/getProductCategory/{searchItem}',[ProductsController::class,'getProductCategory']);
+Route::get('/getProductsNames/{searchItem}',[ProductsController::class,'getProductsNames']);
 

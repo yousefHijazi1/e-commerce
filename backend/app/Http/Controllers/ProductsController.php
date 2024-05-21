@@ -51,19 +51,34 @@ class ProductsController extends Controller
     }
 
 
-    public function getCategories(string $searchItem)
-{
-    $searchTerm = $searchItem;
+    public function getProductCategory(string $searchItem){
+        // Fetch the product based on the product name
+        $product = Product::where('name', $searchItem)->first();
 
-    // Fetch categories from the database and filter them based on the search term
-    $categories = Product::where('name', 'like', '%'.$searchTerm.'%')
-                         ->orWhere('description', 'like', '%'.$searchTerm.'%')
-                         ->pluck('category') // Assuming the category column name is 'category'
-                         ->unique(); // Ensure unique category names
+        // If product is found, return its category, otherwise return null
+        $category = $product ? $product->category : null;
 
-    // Return filtered categories as a JSON response
-    return response()->json(['categories' => $categories]);
-}
+        return response()->json([
+            'category' => $category,
+            'code' => 200
+        ], 200, [], JSON_PRETTY_PRINT);
+    }
+
+    public function getProductsNames(string $searchItem){
+        $searchTerm = $searchItem;
+
+        // Fetch categories from the database and filter them based on the search term
+        $productsNames = Product::where('name', 'like', '%'.$searchTerm.'%')
+                            ->orWhere('description', 'like', '%'.$searchTerm.'%')
+                            ->pluck('name') // Assuming the category column name is 'category'
+                            ->unique(); // Ensure unique category names
+
+        // Return filtered productsNames as a JSON response
+        return response()->json(['productsNames' => $productsNames]);
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      */

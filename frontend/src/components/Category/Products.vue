@@ -53,8 +53,9 @@
                         </div>
                     </div>
                 </router-link >
-                <div v-if="!product">
-                    <h1>There's no any products with name '{{ category }}'</h1>
+
+                <div v-if="message">
+                    <h1>{{ message }}</h1>
                 </div>
 
                 <!-- <div class="col-12">
@@ -82,6 +83,7 @@ data(){
     return{
         products:[],
         message: ''
+
     }
 },
 
@@ -89,12 +91,14 @@ props: {
         category: {
             type: String,
             required: true
-        }
+        },
+        
     },
 
 created(){
     this.getProducts();
 },
+
 methods:{
     async getProducts(){
         try {
@@ -102,6 +106,7 @@ methods:{
             this.products = response.data.products
             console.log(this.products)
         } catch (error) {
+            this.message = "There's no any products with this name";
             console.log(error)
         }
     },
