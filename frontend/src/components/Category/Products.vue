@@ -10,26 +10,26 @@
                         </div>
                         <div class="ml-2">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                                <button type="button" class="btn btn-md btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <button class="dropdown-item" href="#">Latest</button>
-                                    <button class="dropdown-item" href="#">Top Sellers</button>
-                                    <button class="dropdown-item" href="#">Best Rating</button>
+                                    <button class="dropdown-item" @click="sortLatest">Latest</button>
+                                    <button class="dropdown-item" @click="sortTopSellers">Top Sellers</button>
+                                    <!-- <button class="dropdown-item" href="#">Best Rating</button> -->
                                 </div>
                             </div>
-                            <div class="btn-group ml-2">
+                            <!-- <div class="btn-group ml-2">
                                 <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="#">10</a>
                                     <a class="dropdown-item" href="#">20</a>
                                     <a class="dropdown-item" href="#">30</a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
 
-                <router-link :to="{ name: 'details', params: { id: product.id } }"  class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="product in products" :key="product.id" id="card" >
+                <router-link :to="{ name: 'details', params: { id: product.id } }"  class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="product in sortedProducts" :key="product.id" id="card" >
                     <div class="product-item bg-light mb-4">
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
@@ -82,11 +82,21 @@ name:'ProductsByCategories',
 data(){
     return{
         products:[],
-        message: ''
-
+        message: '',
+        sortBy: 'latest' // Default sort method
     }
 },
-
+computed: {
+        sortedProducts() {
+            let sortedProducts = [...this.products]; // Create a copy of the products array
+                if (this.sortBy === 'latest') {
+                    sortedProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                } else if (this.sortBy === 'topSellers') {
+                    sortedProducts.sort((a, b) => b.sold_quantity - a.sold_quantity);
+                }
+            return sortedProducts;
+        }
+    },
 props: {
         category: {
             type: String,
@@ -100,24 +110,27 @@ created(){
 },
 
 methods:{
-    async getProducts(){
-        try {
-            const response = await axios.get('http://127.0.0.1:8000/api/products/category/'+this.category);
-            this.products = response.data.products
-            console.log(this.products)
-        } catch (error) {
-            this.message = "There's no any products with this name";
-            console.log(error)
-        }
-    },
+        async getProducts(){
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/products/category/'+this.category);
+                this.products = response.data.products
+                console.log(this.products)
+            } catch (error) {
+                this.message = "There's no any products with this name";
+                console.log(error)
+            }
+        },
 
-    async getByCategory(){
-        
-    },
-    truncateText(text, length) {
+        sortLatest() {
+            this.sortBy = 'latest';
+        },
+        sortTopSellers() {
+            this.sortBy = 'topSellers';
+        },
+        truncateText(text, length) {
         return text.length > length ? text.substring(0, length) + ' ...' : text;
-    },
-}
+        },
+    }
 }
 </script>
 <style scoped>

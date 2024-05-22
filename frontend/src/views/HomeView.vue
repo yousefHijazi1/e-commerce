@@ -6,10 +6,11 @@
 
     <RecentProducts/>
     
-    <h2>Explore more</h2>
+    
     <!-- <Offer/> -->
     
     <Products/>
+    
 
     <Vendor/>
 

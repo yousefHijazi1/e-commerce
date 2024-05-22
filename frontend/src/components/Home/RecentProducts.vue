@@ -1,7 +1,12 @@
 <template lang="">
     <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-light pr-3">Recent Products</span></h2>
+    <div class="container-fluid pt-5 pb-3">        
+        <div class="d-flex justify-content-between align-items-center mx-xl-5 mb-4">
+            <h2 class="section-title position-relative text-uppercase mb-0" id="recent-products-title" >
+                <span class="bg-light pr-3">Recent Products</span>
+            </h2>
+            <router-link to="/shop" class="bg-light text-custom p-2">View All Products</router-link>
+        </div>
         <div class="row px-xl-5">
             <router-link :to="{ name: 'details', params: { id: product.id } }" v-for="product in displayedProducts" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
                 <div class="product-item bg-light mb-4">
@@ -31,6 +36,7 @@
         </div>
     </div>
     <!-- Products End -->
+    <hr>
 </template>
 
 <script>
@@ -70,8 +76,27 @@ export default {
     }
 }
 </script>
+
 <style scoped>
-    #card{
-        text-decoration:none
+
+#card{
+    text-decoration:none
+}
+    
+/* Custom styles for responsive title */
+#recent-products-title {
+  font-size: 2rem; /* Default font size */
+}
+
+@media (max-width: 768px) {
+    #recent-products-title {
+        font-size: 1.5rem; /* Font size for small screens */
     }
+}
+
+@media (max-width: 576px) {
+    #recent-products-title {
+        font-size: 1.25rem; /* Font size for extra small screens */
+    }
+}
 </style>

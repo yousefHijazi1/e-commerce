@@ -11,8 +11,7 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function recentProducts()
-    {
+    public function recentProducts(){
         $recent_products = Product::latest()->get();
         return response()->json([
             'recent_products' => $recent_products,
@@ -29,8 +28,7 @@ class ProductsController extends Controller
     }
 
 
-    public function productsByCategory(string $category)
-    {
+    public function productsByCategory(string $category){
         // Fetch products by category
         $products = Product::where('category', $category)->get();
 
@@ -78,26 +76,6 @@ class ProductsController extends Controller
     }
 
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function productDetails(string $id){
         try {
             // Fetch the product by its ID, or throw a ModelNotFoundException if not found
@@ -118,10 +96,25 @@ class ProductsController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-
-
+    /**
+     * Display the specified resource.
+     */
 
     /**
      * Show the form for editing the specified resource.
