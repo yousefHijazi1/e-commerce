@@ -77,24 +77,12 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                        <div class="nav-item dropdown dropright">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Laptops </a>
-                            <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                <a href="" class="dropdown-item">Gaming Laptops</a>
-                                <a href="" class="dropdown-item">New Laptops</a>
-                                <a href="" class="dropdown-item">Refurbished Laptops</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown dropright">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Desktops </a>
-                            <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                <a href="" class="dropdown-item">Gaming PC</a>
-                                <a href="" class="dropdown-item">New PC</a>
-                                <a href="" class="dropdown-item">Used PC</a>
-                            </div>
-                        </div>
+                        
+                        <router-link to="/category/laptops"  class="nav-item nav-link">Laptops</router-link>
+                        <router-link to="/category/desktops"  class="nav-item nav-link">Desktops</router-link>
                         <router-link to="/category/playstations"  class="nav-item nav-link">Playstations</router-link>
                         <router-link to="/category/accessories"  class="nav-item nav-link">Accessories</router-link>
+                        <router-link to="/category/drones"  class="nav-item nav-link">Drones</router-link>
                         
                     </div>
                 </nav>
