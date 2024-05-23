@@ -110,26 +110,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <div v-if="displayCategories" class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories <i class="fa fa-angle-down mt-1"></i></a>
-                                <div class="dropdown-menu bg-custom rounded-0 border-0 m-0">
-                                        <!-- <a href="" class="dropdown-item"></a> -->
-                                        
-                                        <router-link to="/category/playstations"  class="dropdown-item">Playstations</router-link>
-                                        <router-link to="/category/accessories"  class="dropdown-item">Accessories</router-link>
-                                        
-                                        <div class=" dropdown-item">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Laptops <i class="fa fa-angle-down mt-1"></i></a>
-                                            <div class="dropdown-menu bg-custom rounded-0 border-0 m-0">
-                                                    <!-- <a href="" class="dropdown-item"></a> -->
-                                                    
-                                                    <a href="" class="dropdown-item">Used Laptops</a>
-                                                    <a href="" class="dropdown-item">Refurbished Laptops</a>
-                                                    
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
+                            
                             <router-link to="/"  class="nav-item nav-link active">Home</router-link>
                             
                             <router-link to="/shop" class="nav-item nav-link">Shop</router-link>
@@ -200,12 +181,12 @@ export default {
         }
     },
     data() {
-    return {
-        searchInput: '', // Rename to searchInput
-        products: [],
-        showSuggestions: false
-    };
-},
+        return {
+            searchInput: '', // Rename to searchInput
+            products: [],
+            showSuggestions: false
+        };
+    },
 methods: {
     search() {
         //Navigate to Gategoriy view with search input without suggestion
@@ -275,5 +256,7 @@ methods: {
     #suggestion:hover{
         text-decoration: none
     }
+
+    
     
 </style>

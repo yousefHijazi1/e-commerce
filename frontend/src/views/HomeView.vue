@@ -1,4 +1,5 @@
 <template>
+    <Categories/>
     
     <Carousel/>
 
@@ -30,10 +31,13 @@ import Vendor from '@/components/Home/Vendor.vue';
 import Swiper from '@/components/Home/Swiper.vue';
 
 import carousel from 'vue-owl-carousel'
+import Categories from '@/components/Home/Categories.vue';
+
 
 // import Swiper from '@components/Home/Swiper.vue';
 export default {
   name: 'HomeView',
+  
   components: {
     Footer,
     Carousel,
@@ -43,7 +47,8 @@ export default {
     RecentProducts,
     Vendor,
     carousel,
-    Swiper
+    Swiper,
+    Categories,
   }
 }
 </script>
