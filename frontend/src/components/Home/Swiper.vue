@@ -1,7 +1,7 @@
 <template>
     <div class="swiper-container-wrapper" id="swiper" >
         <swiper 
-            :slides-per-view="4"
+            :slides-per-view="this.slides"
             :modules="modules"
             :autoplay="{
                 delay: 2000,
@@ -42,21 +42,31 @@
             Swiper,
             SwiperSlide,
         },
+        data(){
+            return{
+                slides:'',
+            }
+        },
+        mounted(){
+            if(window.innerWidth < 990){
+                this.slides = 3;
+            }else{
+                this.slides = 4;
+            }
+        },
         
         setup() {
-        const onSwiper = (swiper) => {
-            console.log(swiper);
-        };
-        const onSlideChange = () => {
-            console.log('slide change');
-        };
-        
-        
-        return {
-            onSwiper,
-            onSlideChange,
-            modules: [Autoplay, Pagination, Navigation],
-        };
+            const onSwiper = (swiper) => {
+                console.log(swiper);
+            };
+            const onSlideChange = () => {
+                console.log('slide change');
+            };
+            return {
+                onSwiper,
+                onSlideChange,
+                modules: [Autoplay, Pagination, Navigation],
+            };
         },
     };
 </script>

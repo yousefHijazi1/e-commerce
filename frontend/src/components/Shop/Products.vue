@@ -10,7 +10,7 @@
                     </div>
                     <div class="ml-2">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-md btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
+                            <button type="button" class="btn btn-md btn-light dropdown-toggle" data-toggle="dropdown">{{ this.sortBy }}</button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <button class="dropdown-item" @click="sortLatest">Latest</button>
                                 <button class="dropdown-item" @click="sortTopSellers">Top Sellers</button>
@@ -51,7 +51,7 @@ export default {
     data() {
         return {
             products: [],
-            sortBy: 'latest' // Default sort method
+            sortBy: 'Latest' // Default sort method
         };
     },
     props:{
@@ -66,9 +66,9 @@ export default {
             let filteredProducts = this.products.filter(product => product.price <= this.maxPrice);
 
             // Sort the filtered products
-            if (this.sortBy === 'latest') {
+            if (this.sortBy === 'Latest') {
                 filteredProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
-            } else if (this.sortBy === 'topSellers') {
+            } else if (this.sortBy === 'Top Sellers') {
                 filteredProducts.sort((a, b) => b.sold_quantity - a.sold_quantity);
             }
 
@@ -89,10 +89,10 @@ export default {
             }
         },
         sortLatest() {
-            this.sortBy = 'latest';
+            this.sortBy = 'Latest';
         },
         sortTopSellers() {
-            this.sortBy = 'topSellers';
+            this.sortBy = 'Top Sellers';
         },
         truncateText(text, length) {
             return text.length > length ? text.substring(0, length) + ' ...' : text;
@@ -104,5 +104,11 @@ export default {
 <style scoped>
     #card{
         text-decoration: none;
+    }
+    .product-item .text-center a {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 </style>

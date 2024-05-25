@@ -5,7 +5,7 @@
             <h2 class="section-title position-relative text-uppercase mb-0" id="recent-products-title" >
                 <span class="bg-light pr-3">Recent Products</span>
             </h2>
-            <router-link to="/shop" class="bg-light text-custom p-2">View All Products</router-link>
+            <router-link to="/shop" class="bg-light text-custom p-2" id="view">View All Products</router-link>
         </div>
         <div class="row px-xl-5">
             <div class="row px-xl-5">
@@ -99,6 +99,10 @@ export default {
 @media (max-width: 576px) {
     #recent-products-title {
         font-size: 1.25rem; /* Font size for extra small screens */
+        
+    }
+    #view{
+        font-size: 1.2rem;
     }
 }
 </style>
