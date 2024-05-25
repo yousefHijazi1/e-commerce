@@ -87,19 +87,27 @@ data(){
     }
 },
 computed: {
-        sortedProducts() {
-            let sortedProducts = [...this.products]; // Create a copy of the products array
-                if (this.sortBy === 'latest') {
-                    sortedProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                } else if (this.sortBy === 'topSellers') {
-                    sortedProducts.sort((a, b) => b.sold_quantity - a.sold_quantity);
-                }
-            return sortedProducts;
-        }
+    sortedProducts() {
+            // Filter products based on maxPrice
+            let filteredProducts = this.products.filter(product => product.price <= this.maxPrice);
+
+            // Sort the filtered products
+            if (this.sortBy === 'latest') {
+                filteredProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (this.sortBy === 'topSellers') {
+                filteredProducts.sort((a, b) => b.sold_quantity - a.sold_quantity);
+            }
+
+            return filteredProducts;
+        },
     },
 props: {
         category: {
             type: String,
+            required: true
+        },
+        maxPrice: {
+            type: Number,
             required: true
         },
         
@@ -120,6 +128,8 @@ methods:{
                 console.log(error)
             }
         },
+
+        
 
         sortLatest() {
             this.sortBy = 'latest';

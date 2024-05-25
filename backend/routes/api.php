@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,10 +15,13 @@ use App\Http\Controllers\ProductsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/logout',[AuthController::class,'logout']);
 });
 
+// Products Controller
 Route::get('/allProducts',[ProductsController::class,'allProducts']);
 
 Route::get('/recentProducts',[ProductsController::class,'recentProducts']);
@@ -29,4 +33,10 @@ Route::get('/products/category/{category}', [ProductsController::class, 'product
 Route::get('/getProductCategory/{searchItem}',[ProductsController::class,'getProductCategory']);
 
 Route::get('/getProductsNames/{searchItem}',[ProductsController::class,'getProductsNames']);
+
+
+// Auth Controller
+Route::post('/register',[AuthController::class,'register']);
+
+Route::post('/login',[AuthController::class,'login']);
 

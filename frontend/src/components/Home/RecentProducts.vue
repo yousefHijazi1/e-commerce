@@ -8,31 +8,26 @@
             <router-link to="/shop" class="bg-light text-custom p-2">View All Products</router-link>
         </div>
         <div class="row px-xl-5">
-            <router-link :to="{ name: 'details', params: { id: product.id } }" v-for="product in displayedProducts" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
+            <div  v-for="product in displayedProducts" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
+                        <router-link :to="{ name: 'details', params: { id: product.id } }">
+                            <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
+                        </router-link>
+                        
                         <!-- <div class="product-action">
                         </div> -->
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">{{ truncateText(product.description, 30) }}</a>
+                        <p class="h6 text-decoration-none text-truncate">{{ truncateText(product.description, 30) }}</p>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>${{ product.discount ? product.price - product.discount : Math.trunc(product.price) }}</h5>
                             <h6 v-if="product.discount > 0" class="text-muted ml-2"><del>${{ Math.trunc(product.price) }}</del></h6>
                         </div>
-                        <!-- <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-custom mr-1"></small>
-                            <small class="fa fa-star text-custom mr-1"></small>
-                            <small class="fa fa-star text-custom mr-1"></small>
-                            <small class="fa fa-star text-custom mr-1"></small>
-                            <small class="fa fa-star text-custom mr-1"></small>
-                            <small>(99)</small>
-                        </div> -->
                         <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
                     </div>
                 </div>
-            </router-link>
+            </div>
         </div>
     </div>
     <!-- Products End -->
