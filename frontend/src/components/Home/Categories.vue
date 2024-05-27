@@ -3,6 +3,10 @@
         <swiper 
             :slides-per-view="3"
             :modules="modules"
+            :autoplay="{
+                delay: 3000,
+                disableOnInteraction: false,
+            }"
             :space-between="40"
             :loop="true"
             @swiper="onSwiper"

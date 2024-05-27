@@ -18,7 +18,7 @@
             <swiper-slide><img :src="require('@/assets/images/lenovo.png')" class="col-lg-3 col-md-6 col-sm-12" alt="lenovo logo" style="min-width: 100px; max-width: 200px"></swiper-slide>
             <swiper-slide><img :src="require('@/assets/images/hp.png')" class="col-lg-3 col-md-6 col-sm-12" alt="hp logo" style="min-width: 100px; max-width: 200px"></swiper-slide>
             <swiper-slide><img :src="require('@/assets/images/acer.png')" class="col-lg-3 col-md-6 col-sm-12" alt="acer logo" style="min-width: 100px; max-width: 200px"></swiper-slide>
-            <swiper-slide><img :src="require('@/assets/images/toshiba.png')" class="col-lg-3 col-md-6 col-sm-12" alt="acer logo" style="min-width: 150px; max-width: 300px"></swiper-slide>
+            <!-- <swiper-slide><img :src="require('@/assets/images/toshiba.png')" class="col-lg-3 col-md-6 col-sm-12" alt="acer logo" style="min-width: 100px; max-width: 200px"></swiper-slide> -->
         </swiper>
 
     </div>
@@ -49,7 +49,7 @@
         },
         mounted(){
             if(window.innerWidth < 990){
-                this.slides = 3;
+                this.slides = 2;
             }else{
                 this.slides = 4;
             }

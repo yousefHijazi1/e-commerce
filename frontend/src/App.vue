@@ -1,8 +1,6 @@
 <template>
   <!-- Topbar Start -->
   <div class="container-fluid">
-        
-        
         <div class="row align-items-center py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-8">
                 <router-link to="/" class="text-decoration-none">
@@ -70,10 +68,7 @@
                             <button class="btn btn-light mr-2" @click="logout" v-if="auth && displayButtons" >Logout</button>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                            <!-- <a href="" class="btn px-0">
-                                <i class="fas fa-heart text-light mr-1"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </a> -->
+                            
                             <router-link to="/auth" class="btn btn-dark ml-2 mr-2" v-if="!auth" @click="closeNavbar" id="login">Login / Register</router-link>
                             <button class="btn btn-dark mr-2" @click="logout" v-if="auth" id="logout">Logout</button>
 
@@ -246,7 +241,7 @@ export default {
     #login{
         border: solid 1px white
     }
-    
+
     #logout{
         border: solid 1px white
     }
