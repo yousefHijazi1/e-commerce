@@ -7,6 +7,8 @@ import './assets/animate.min.css';
 
 createApp(App).use(router).mount('#app')
 
+// eslint-disable-next-line no-unused-vars
+import { FontAwesomeIcon } from './fontawesome';
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap's JavaScript
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap's CSS

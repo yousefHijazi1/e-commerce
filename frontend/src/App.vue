@@ -1,54 +1,7 @@
 <template>
   <!-- Topbar Start -->
   <div class="container-fluid">
-        <div class="row  py-1 px-xl-5" style="background-color: #F5F5F5;">
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="d-inline-flex align-items-center h-100">
-                    <a class="text-body mr-3" href="">About</a>
-                    <a class="text-body mr-3" href="">Contact</a>
-                    <a class="text-body mr-3" href="">Help</a>
-                    <a class="text-body mr-3" href="">FAQs</a>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <div class="btn-group">
-                        <!-- <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Sign in</button>
-                            <button class="dropdown-item" type="button">Sign up</button>
-                        </div> -->
-                        <router-link to="/auth" class="btn btn-light mr-2" >Login / Register</router-link>
-                    </div>
-                    <!-- <div class="btn-group mx-2">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">USD</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">EUR</button>
-                            <button class="dropdown-item" type="button">GBP</button>
-                            <button class="dropdown-item" type="button">CAD</button>
-                        </div>
-                    </div> -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">English</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Arabic</button>
-                            <!-- <button class="dropdown-item" type="button">FR</button> -->
-                            <!-- <button class="dropdown-item" type="button">RU</button> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="d-inline-flex align-items-center d-block d-lg-none">
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-heart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                    </a>
-                    <a href="" class="btn px-0 ml-2">
-                        <i class="fas fa-shopping-cart text-dark"></i>
-                        <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
-                    </a>
-                </div>
-            </div>
-        </div>
+        
         
         <div class="row align-items-center py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-8">
@@ -99,31 +52,35 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             
-                            <router-link to="/"  class="nav-item nav-link active">Home</router-link>
+                            <router-link to="/"  class="nav-item nav-link active" @click="closeNavbar" >Home</router-link>
                             
-                            <router-link to="/shop" class="nav-item nav-link">Shop</router-link>
-                            
-                            
+                            <router-link to="/shop" class="nav-item nav-link" @click="closeNavbar">Shop</router-link>
                             
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-custom rounded-0 border-0 m-0" id="pages">
-                                    <router-link to="/cart"  class="dropdown-item" id="cart">Shopping Cart</router-link>
-                                    <router-link to="/checkout" class="dropdown-item" id="checkout">Checkout</router-link>
+                                    <router-link to="/cart"  class="dropdown-item" id="cart" @click="closeNavbar">Shopping Cart</router-link>
+                                    <router-link to="/checkout" class="dropdown-item" id="checkout" @click="closeNavbar">Checkout</router-link>
                                 </div>
                             </div>
-                            <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
-                            <router-link to="/contact"  class="nav-item nav-link active">Contact</router-link>
+                            
+                            <router-link to="/contact"  class="nav-item nav-link" @click="closeNavbar">Contact</router-link>
+                            <router-link to="/auth"  class="btn btn-light" v-if="!auth && displayButtons" @click="closeNavbar">Login / Register</router-link>
+                            
+                            <button class="btn btn-light mr-2" @click="logout" v-if="auth && displayButtons" >Logout</button>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <!-- <a href="" class="btn px-0">
                                 <i class="fas fa-heart text-light mr-1"></i>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                             </a> -->
-                            <a href="" class="btn px-0 ">
+                            <router-link to="/auth" class="btn btn-dark ml-2 mr-2" v-if="!auth" @click="closeNavbar" id="login">Login / Register</router-link>
+                            <button class="btn btn-dark mr-2" @click="logout" v-if="auth" id="logout">Logout</button>
+
+                            <router-link to="/cart" class="btn px-0 " @click="closeNavbar">
                                 <i class="fas fa-shopping-cart text-light mr-1"></i>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </nav>
@@ -159,67 +116,108 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+    
     mounted() {
+        this.checkAuth();
         // Check screen size when component is mounted
         if (window.innerWidth < 990) {
-            this.displayCategories = true; // Set displayCategories to false if screen is less than 992px
-        } else {
-            this.displayCategories = false; // Set displayCategories to true if screen is 992px or larger
+            this.displayButtons = true; // Set displayButtons to false if screen is less than 992px
+        }else {
+            this.displayButtons = false; // Set displayButtons to true if screen is 992px or larger
         }
     },
     data() {
-        return {
+        return{
             searchInput: '', // Rename to searchInput
             products: [],
-            showSuggestions: false
+            showSuggestions: false,
+            auth: false,
+            displayButtons: false,
         };
     },
-methods: {
-    search() {
-        //Navigate to Gategoriy view with search input without suggestion
-        fetch(`http://127.0.0.1:8000/api/getProductCategory/${this.searchInput}`)
+    
+    methods: {
+        closeNavbar() {
+            const navbarCollapse = document.querySelector(".navbar-collapse");
+            if (navbarCollapse.classList.contains("show")) {
+                navbarCollapse.classList.remove("show");
+            }
+        },
+        search() {
+            //Navigate to Gategoriy view with search input without suggestion
+            fetch(`http://127.0.0.1:8000/api/getProductCategory/${this.searchInput}`)
+                    .then(response => response.json())
+                    .then(data => {
+                            const category = data.category; // Access category from the response data
+                            this.showSuggestions = false;
+                            this.$router.push({ path: `/category/${category}` });
+                            this.searchInput = '';
+                        })
+                    .catch(error => console.error('Error fetching category:', error));
+            },
+
+        async suggestedNames() {
+        // Fetch categories based on search input
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/getProductsNames/${this.searchInput}`);
+                const data = await response.json();
+                
+                this.products = data.productsNames;
+                this.showSuggestions = true;
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+                }
+            },
+            
+            selectProduct(product) {
+            // Set the search input to the selected product name
+            this.searchInput = product;
+
+            // Navigate to the category route when a suggestion is clicked
+            fetch(`http://127.0.0.1:8000/api/getProductCategory/${product}`)
                 .then(response => response.json())
                 .then(data => {
                         const category = data.category; // Access category from the response data
                         this.showSuggestions = false;
                         this.$router.push({ path: `/category/${category}` });
-                        this.searchInput = '';
                     })
                 .catch(error => console.error('Error fetching category:', error));
-        },
-
-    async suggestedNames() {
-    // Fetch categories based on search input
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/getProductsNames/${this.searchInput}`);
-            const data = await response.json();
-            
-            this.products = data.productsNames;
-            this.showSuggestions = true;
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-            }
-        },
-        
-        selectProduct(product) {
-        // Set the search input to the selected product name
-        this.searchInput = product;
-
-        // Navigate to the category route when a suggestion is clicked
-        fetch(`http://127.0.0.1:8000/api/getProductCategory/${product}`)
-            .then(response => response.json())
-            .then(data => {
-                    const category = data.category; // Access category from the response data
-                    this.showSuggestions = false;
-                    this.$router.push({ path: `/category/${category}` });
-                })
-            .catch(error => console.error('Error fetching category:', error));
-        },
-    }
+            },
+            async logout() {
+                    try {
+                    const token = localStorage.getItem("token");
+                    const response = await axios.post("http://127.0.0.1:8000/api/logout",null,
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${token}`,
+                                    },
+                                }
+                            );
+                        if (response.status === 200) {
+                            localStorage.removeItem("token");
+                            this.auth = false;
+                            this.$router.push("/");
+                        }
+                    } catch (error) {
+                    console.log(error);
+                    }
+                },
+                checkAuth() {
+                    if (localStorage.getItem('token')) {
+                        this.auth = true;
+                    } else {
+                        this.auth = false;
+                    }
+                },
+                
+        }
 };
 
 </script>
+
 <style>
     #pages{
         background-color: #446084;
@@ -245,6 +243,12 @@ methods: {
         text-decoration: none
     }
 
+    #login{
+        border: solid 1px white
+    }
     
+    #logout{
+        border: solid 1px white
+    }
     
 </style>
