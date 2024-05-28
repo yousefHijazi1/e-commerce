@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use App\Models\Cart;
 
 class ProductsController extends Controller
 {
@@ -95,6 +95,10 @@ class ProductsController extends Controller
             ], 404, [], JSON_PRETTY_PRINT);
         }
     }
+
+    
+
+
 
     /**
      * Show the form for creating a new resource.

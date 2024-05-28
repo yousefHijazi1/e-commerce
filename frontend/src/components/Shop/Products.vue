@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div  class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="product in sortedProducts" :key="product.id" id="card">
+            <div class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="product in sortedProducts" :key="product.id" id="card">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <router-link :to="{ name: 'details', params: { id: product.id } }">
@@ -30,10 +30,10 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href="">{{ truncateText(product.description, 30) }}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>${{ product.discount ? product.price - product.discount : Math.trunc(product.price) }}</h5>
+                            <h5>${{ product.discount ? product.price - product.discount/100 * product.price : Math.trunc(product.price)  }}</h5>
                             <h6 v-if="product.discount > 0" class="text-muted ml-2"><del>${{ Math.trunc(product.price) }}</del></h6>
                         </div>
-                        <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
+                        <button class="btn btn-custom px-3 m-2" @click="addToCart(product.id)"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@ export default {
             sortBy: 'Latest' // Default sort method
         };
     },
-    props:{
+    props: {
         maxPrice: {
             type: Number,
             required: true
@@ -97,12 +97,42 @@ export default {
         truncateText(text, length) {
             return text.length > length ? text.substring(0, length) + ' ...' : text;
         },
+        addToCart(productId) {
+            
+            const userId = localStorage.getItem('auth_id'); // Assuming you store the auth_id in localStorage
+            const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+
+            if (!userId) {
+                this.$router.push({ path: '/auth', query: { message: 'You must login to add products to cart' }});
+                console.log('not authenticated')
+            }else{
+                console.log(userId);
+                const payload = {
+                    user_id: userId,
+                    product_id: productId,
+                    quantity: 1 // You can change this based on your needs
+                };
+
+                axios.post('http://127.0.0.1:8000/api/cart', payload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then(() => {
+                    console.log('Product added to cart successfully');
+                })
+                .catch(error => {
+                    console.error('Error adding product to cart:', error);
+                    alert('Failed to add product to cart');
+                });
+            }
+        }
     }
 };
 </script>
 
 <style scoped>
-    #card{
+    #card {
         text-decoration: none;
     }
     .product-item .text-center a {

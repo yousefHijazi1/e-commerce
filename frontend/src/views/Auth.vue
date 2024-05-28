@@ -17,6 +17,9 @@
             </div>
           </div>
         </div>
+        <div v-if="cartMessage" class="alert alert-warning col-lg-6 col-md-6 col-sm-12" role="alert">
+            {{ cartMessage }}
+        </div>
         <div class="forms">
             <div class="form-content">
               <div class="login-form">
@@ -49,6 +52,9 @@
           </div>
         
           <div class="signup-form">
+            <div v-if="registered" class="alert alert-primary" role="alert">
+              {{ registered }}
+            </div>
             <div class="title">Signup</div>
               <form @submit.prevent="register">
                   <div class="input-boxes">
@@ -108,8 +114,14 @@ export default {
 
         },
         errors: {},
-        message:''
+        message:'',
+        cartMessage: '',
+        registered:''
+        
       }
+    },
+    created(){
+      this.cartMessage = this.$route.query.message || '';
     },
     methods:{
       async login(){
@@ -118,12 +130,14 @@ export default {
               if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('role', response.data.user.role);
+                localStorage.setItem('auth_id',response.data.user.id);
+                const userID = localStorage.getItem('auth_id');
 
                 if (response.data.user.role === 'admin') {
                     this.$router.push('/admin');
 
                 }else {
-                  this.$router.push('/cart');
+                  this.$router.push(`/cart/${userID}`);
                 }
               }
 
@@ -139,9 +153,10 @@ export default {
                 const response = await axios.post('http://127.0.0.1:8000/api/register', this.registerData);
                     this.registerData.name = '';
                     this.registerData.email = '';
+                    this.registerData.phone = '';
                     this.registerData.password = '';
                     this.registerData.password_confirmation = '';
-
+                    this.registered = response.data.message;
                     if(response.data.code == 400){
                         this.errors = response.data.errors
                     }else{

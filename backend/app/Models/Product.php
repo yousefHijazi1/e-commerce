@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cart;
 
 class Product extends Model
 {
@@ -21,5 +22,10 @@ class Product extends Model
         'rate',
         'category'
     ];
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
     use HasFactory;
 }

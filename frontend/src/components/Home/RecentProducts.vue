@@ -21,7 +21,7 @@
                     <div class="text-center py-4">
                         <p class="h6 text-decoration-none text-truncate">{{ truncateText(product.description, 30) }}</p>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>${{ product.discount ? product.price - product.discount : Math.trunc(product.price) }}</h5>
+                            <h5>${{ product.discount ? product.price - product.discount/100 * product.price : Math.trunc(product.price)  }}</h5>
                             <h6 v-if="product.discount > 0" class="text-muted ml-2"><del>${{ Math.trunc(product.price) }}</del></h6>
                         </div>
                         <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>

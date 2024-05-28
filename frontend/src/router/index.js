@@ -30,9 +30,19 @@ const routes = [
     component: Auth
   },
   {
-    path:'/cart',
+    path: '/cart/:userId',
     name: 'cart',
-    component: Cart
+    component: Cart,
+    beforeEnter: (to, from, next) => {
+      const userId = localStorage.getItem('auth_id');
+      if (!userId) {
+        // If auth_id is not found, redirect to authentication page
+        next('/auth');
+      } else {
+        // If auth_id is found, proceed to the cart route with the userId
+        next();
+      }
+    }
   },
   {
     path:'/checkout',

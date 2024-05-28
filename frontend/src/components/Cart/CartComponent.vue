@@ -6,7 +6,8 @@
                 <table class="table table-light table-borderless table-hover text-center mb-0">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Products</th>
+                            <th>Image</th>
+                            <th>Product</th>
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
@@ -14,9 +15,10 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        <tr>
-                            <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
+                        <tr v-for="product in products" :key="product.id">
+                            <td class="align-middle"><img :src="require('@/assets/images/'+product.image_1)" alt="product image" style="width: 50px;margin-right:10px"></td>
+                            <td class="align-middle">{{ product.name }}</td>
+                            <td class="align-middle">${{ product.discount ? product.price - product.discount/100 * product.price : Math.trunc(product.price) }}</td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -32,93 +34,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
+                            <td class="align-middle">${{ product.discount ? product.price - product.discount/100 * product.price : Math.trunc(product.price) * product.quantity }}</td>
+                            <td class="align-middle"><button class="btn btn-sm btn-danger" @click.prevent="deleteProduct(product.id)"><i class="fa fa-times"></i></button></td>
                         </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-light border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-3.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-light border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-4.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-light border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                        <tr>
-                            <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;"> Product Name</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-minus" >
-                                        <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-light border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-custom btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -136,7 +55,7 @@
                     <div class="border-bottom pb-2">
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Subtotal</h6>
-                            <h6>$150</h6>
+                            <h6>${{ totalPrice }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
@@ -156,10 +75,63 @@
     </div>
     <!-- Cart End -->
 </template>
+
 <script>
+import axios from 'axios';
+
 export default {
     name:'CartComponent',
+    data(){
+        return{
+            products:[],
+            message:'',
+            totalPrice: 0,
+            
+        }
+    },
+    created(){
+        
+        this.getProducts();
+    },
+    methods:{
+        async getProducts() {
+            try {
+                const userId = localStorage.getItem('auth_id');
+                const token = localStorage.getItem('token');
 
+                const response = await axios.get(`http://127.0.0.1:8000/api/cart/products/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.totalPrice = response.data.total_price;
+                this.products = response.data.products;
+                
+                console.log(this.products);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async deleteProduct(id){
+            try {
+                console.log(id);
+                const token = localStorage.getItem('token')
+                const response = await axios.delete(`http://127.0.0.1:8000/api/remove/${id}`,
+                {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+                });
+                console.log(response.data.message);
+                this.message = response.data.message;
+                this.getProducts();
+
+            } catch (error) {
+                console.log(error)
+            }
+
+            },
+    }
 }
 </script>
 <style lang="">

@@ -42,7 +42,7 @@
                     
                     <div class="font-weight-semi-bold mb-4">
                         <div >
-                            <h2 style="display: inline-block;">${{ product.discount ? product.price - product.discount : product.price }}</h2>
+                            <h2 style="display: inline-block;">${{product.discount ? product.price - product.discount/100 * product.price : Math.trunc(product.price) }}</h2>
                             <h4 style="display: inline-block;" v-if="product.discount > 0" class="text-danger ml-2"><del>${{ Math.trunc(product.price)}}</del></h4>
                         </div>
                     </div>

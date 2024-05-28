@@ -57,7 +57,8 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-custom rounded-0 border-0 m-0" id="pages">
-                                    <router-link to="/cart"  class="dropdown-item" id="cart" @click="closeNavbar">Shopping Cart</router-link>
+                                    <router-link v-if="userId" :to="'/cart/' + userId" class="dropdown-item" id="cart" @click="closeNavbar">Shopping Cart</router-link>
+                                    <router-link v-else to="/auth" class="dropdown-item" id="cart" @click="closeNavbar">Shopping Cart</router-link>
                                     <router-link to="/checkout" class="dropdown-item" id="checkout" @click="closeNavbar">Checkout</router-link>
                                 </div>
                             </div>
@@ -72,7 +73,11 @@
                             <router-link to="/auth" class="btn btn-dark ml-2 mr-2" v-if="!auth" @click="closeNavbar" id="login">Login / Register</router-link>
                             <button class="btn btn-dark mr-2" @click="logout" v-if="auth" id="logout">Logout</button>
 
-                            <router-link to="/cart" class="btn px-0 " @click="closeNavbar">
+                            <router-link v-if="userId" :to="'/cart/' + userId" class="btn px-0 " @click="closeNavbar">
+                                <i class="fas fa-shopping-cart text-light mr-1"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{ productsCount }}</span>
+                            </router-link>
+                            <router-link v-else :to="'/auth'" class="btn px-0 " @click="closeNavbar">
                                 <i class="fas fa-shopping-cart text-light mr-1"></i>
                                 <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                             </router-link>
@@ -131,7 +136,14 @@ export default {
             showSuggestions: false,
             auth: false,
             displayButtons: false,
+            userId: '',
+            productsCount: 0,
         };
+    },
+    created(){
+        if(localStorage.getItem('auth_id')){
+            this.userId = localStorage.getItem('auth_id');
+        }
     },
     
     methods: {
@@ -193,6 +205,9 @@ export default {
                             );
                         if (response.status === 200) {
                             localStorage.removeItem("token");
+                            localStorage.removeItem('auth_id');
+                            localStorage.removeItem('role');
+                            this.userId = '';
                             this.auth = false;
                             this.$router.push("/");
                         }
@@ -207,7 +222,22 @@ export default {
                         this.auth = false;
                     }
                 },
-                
+
+                async cartCount(){
+                    const userId = localStorage.getItem('auth_id');
+                    console.log(userId);
+                    if (!userId) {
+                        this.productsCount = 0;
+                    }
+                    
+                    try {
+                        const response = await axios.get('http://127.0.0.1:8000/api/count/'+ userId);
+                        this.productsCount = response.data.products_count;
+                        // console.log(this.productsCount);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
         }
 };
 
