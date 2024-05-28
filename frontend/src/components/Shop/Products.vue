@@ -24,7 +24,7 @@
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <router-link :to="{ name: 'details', params: { id: product.id } }">
-                            <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
+                            <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" style="height:240px" alt="product img">
                         </router-link>
                     </div>
                     <div class="text-center py-4">

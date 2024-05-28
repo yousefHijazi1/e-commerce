@@ -65,7 +65,7 @@
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Total</h5>
-                            <h5>$160</h5>
+                            <h5>${{ totalPrice + 10 }}</h5>
                         </div>
                         <button class="btn btn-block btn-custom font-weight-bold my-3 py-3">Proceed To Checkout</button>
                     </div>
