@@ -29,10 +29,12 @@
                     </div>
                 </div>
 
-                <router-link :to="{ name: 'details', params: { id: product.id } }"  class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="product in sortedProducts" :key="product.id" id="card" >
+                <div   class="col-lg-4 col-md-6 col-sm-6 pb-1" v-for="product in sortedProducts" :key="product.id" id="card" >
                     <div class="product-item bg-light mb-4">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
+                            <router-link :to="{ name: 'details', params: { id: product.id } }">
+                                <img class="img-fluid w-100" :src="require('@/assets/images/'+ product.image_1 )" alt="">
+                            </router-link>
                         </div>
                         <div class="text-center py-4">
                             <a class="h6 text-decoration-none text-truncate" href="">{{ truncateText(product.description, 30) }}</a>
@@ -48,11 +50,10 @@
                                 <small class="fa fa-star text-custom mr-1"></small>
                                 <!-- <small>(99)</small> -->
                             </div>
-                            <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i></button>
-                            <button class="btn btn-custom px-3 "><i class="fa fa-heart mr-1"></i></button>
+                            <button class="btn btn-custom px-3 m-2" @click="addToCart(product.id)"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
                         </div>
                     </div>
-                </router-link >
+                </div >
 
                 <div v-if="message">
                     <h1>{{ message }}</h1>
@@ -70,15 +71,20 @@
                     </nav>
                 </div> -->
             </div>
+            <Notification ref="notification" message="Product added to cart successfully !" />
         </div>
         <!-- Shop Product End -->
 
 </template>
 <script>
 import axios from 'axios';
+import Notification from '@/components/Notification.vue';
 
 export default {
 name:'ProductsByCategories',
+components:{
+Notification
+},
 data(){
     return{
         products:[],
@@ -140,6 +146,36 @@ methods:{
         truncateText(text, length) {
         return text.length > length ? text.substring(0, length) + ' ...' : text;
         },
+        addToCart(productId) {
+            const userId = localStorage.getItem('auth_id'); // Assuming you store the auth_id in localStorage
+            const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+
+            if (!userId) {
+                this.$router.push({ path: '/auth', query: { message: 'You must login to add products to cart' }});
+                console.log('not authenticated')
+            } else {
+                console.log(userId);
+                const payload = {
+                    user_id: userId,
+                    product_id: productId,
+                    quantity: 1 // You can change this based on your needs
+                };
+
+                axios.post('http://127.0.0.1:8000/api/cart', payload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then(() => {
+                    console.log('Product added to cart successfully');
+                    this.$refs.notification.show();
+                })
+                .catch(error => {
+                    console.error('Error adding product to cart:', error);
+                    alert('Failed to add product to cart');
+                });
+            }
+        }
     }
 }
 </script>

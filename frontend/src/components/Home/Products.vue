@@ -32,21 +32,26 @@
                                 <small class="fa fa-star text-custom mr-1"></small>
                                 <!-- <small>(99)</small> -->
                             </div>
-                            <button class="btn btn-custom px-3 m-2"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
+                            <button class="btn btn-custom px-3 m-2" @click="addToCart(product.id)"><i class="fa fa-shopping-cart mr-1"></i>Add to cart</button>
                             
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <Notification ref="notification" message="Product added to cart successfully !" />
     </div>
     <!-- Products End -->
 </template>
 <script>
 
 import axios from 'axios';
+import Notification from '@/components/Notification.vue';
 export default {
     name:'AllProducts',
+    components:{
+        Notification
+    },
     data(){
         return{
             products:[],
@@ -75,6 +80,36 @@ export default {
         truncateText(text, length) {
             return text.length > length ? text.substring(0, length) + ' ...' : text;
         },
+        addToCart(productId) {
+            const userId = localStorage.getItem('auth_id'); // Assuming you store the auth_id in localStorage
+            const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+
+            if (!userId) {
+                this.$router.push({ path: '/auth', query: { message: 'You must login to add products to cart' }});
+                console.log('not authenticated')
+            } else {
+                console.log(userId);
+                const payload = {
+                    user_id: userId,
+                    product_id: productId,
+                    quantity: 1 // You can change this based on your needs
+                };
+
+                axios.post('http://127.0.0.1:8000/api/cart', payload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then(() => {
+                    console.log('Product added to cart successfully');
+                    this.$refs.notification.show();
+                })
+                .catch(error => {
+                    console.error('Error adding product to cart:', error);
+                    alert('Failed to add product to cart');
+                });
+            }
+        }
     }
 }
 </script>

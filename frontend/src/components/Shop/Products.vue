@@ -38,16 +38,20 @@
                 </div>
             </div>
         </div>
+        <Notification ref="notification" message="Product added to cart successfully !" />
     </div>
     <!-- Shop Product End -->
 </template>
 
 <script>
 import axios from 'axios';
+import Notification from '@/components/Notification.vue';
 
 export default {
     name: 'ProductsComponent',
-    
+    components: {
+        Notification
+    },
     data() {
         return {
             products: [],
@@ -98,14 +102,13 @@ export default {
             return text.length > length ? text.substring(0, length) + ' ...' : text;
         },
         addToCart(productId) {
-            
             const userId = localStorage.getItem('auth_id'); // Assuming you store the auth_id in localStorage
             const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
 
             if (!userId) {
                 this.$router.push({ path: '/auth', query: { message: 'You must login to add products to cart' }});
                 console.log('not authenticated')
-            }else{
+            } else {
                 console.log(userId);
                 const payload = {
                     user_id: userId,
@@ -120,6 +123,7 @@ export default {
                 })
                 .then(() => {
                     console.log('Product added to cart successfully');
+                    this.$refs.notification.show();
                 })
                 .catch(error => {
                     console.error('Error adding product to cart:', error);

@@ -61,28 +61,33 @@
                     <div class="input-box">
                       <i style="width:15px;" class="text-custom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg></i>
                       <input type="text" placeholder="Enter your name" required v-model="registerData.name">
-                      <p v-if="errors && errors.name" class="text-danger fw-bold mt-2">{{ errors.name.join(', ') }}</p>
                     </div>
+                    <p v-if="errors && errors.name" class="text-danger fw-bold mt-2">{{ errors.name.join(', ') }}</p>
+                    
                     <div class="input-box">
                       <i style="width:15px" class="text-custom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg></i>
                       <input type="email" placeholder="Enter your email" required v-model="registerData.email">
-                      <p v-if="errors && errors.name" class="text-danger fw-bold mt-2">{{ errors.email.join(', ') }}</p>
                     </div>
+                    <p v-if="errors && errors.email" class="text-danger fw-bold mt-2">{{ errors.email.join(', ') }}</p>
+                    
                     <div class="input-box">
                       <i style="width:15px" class="text-custom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg></i>
                       <input type="text" placeholder="Enter your phone number" required v-model="registerData.phone">
-                      <p v-if="errors && errors.name" class="text-danger fw-bold mt-2">{{ errors.phone.join(', ') }}</p>
                     </div>
+                    <p v-if="errors && errors.phone" class="text-danger fw-bold mt-2">{{ errors.phone.join(', ') }}</p>
+                    
                     <div class="input-box">
                       <i style="width:15px" class="text-custom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"/></svg></i>
                       <input type="password" placeholder="Enter your password" required v-model="registerData.password">
-                      <p v-if="errors && errors.name" class="text-danger fw-bold mt-2">{{ errors.password.join(', ') }}</p>
                     </div>
+                    <p v-if="errors && errors.password" class="text-danger fw-bold mt-2">{{ errors.password.join(', ') }}</p>
+                    
                     <div class="input-box">
                       <i style="width:15px" class="text-custom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"/></svg></i>
                       <input type="password" placeholder="Repeat your password" required v-model="registerData.password_confirmation">
-                      <p v-if="errors && errors.name" class="text-danger fw-bold mt-2">{{ errors.password_confirmation.join(', ') }}</p>
                     </div>
+                    <p v-if="errors && errors.password_confirmation" class="text-danger fw-bold mt-2">{{ errors.password_confirmation.join(', ') }}</p>
+                    
                     <div class="button input-box">
                       <input type="submit" value="Sumbit">
                     </div>
