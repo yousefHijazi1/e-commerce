@@ -15,6 +15,10 @@ Product Page
 
 ![alt text](https://github.com/yousefHijazi1/e-commerce/blob/main/details.png)
 
+Authentication Page
+
+![alt text](https://github.com/yousefHijazi1/e-commerce/blob/main/auth.png)
+
 
 Cart Page
 ![alt text](https://github.com/yousefHijazi1/e-commerce/blob/main/cart.png)
