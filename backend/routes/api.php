@@ -6,27 +6,15 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
     Route::post('/cart',[CartController::class,'addToCart']);
-    Route::get('/cart/products/{userId}', [CartController::class, 'getCartProducts']);
     Route::delete('/remove/{id}',[CartController::class,'delete']);
     Route::get('/count/{user_id}',[CartController::class,'getCount']);
-
+    Route::get('/cart/products/{userId}', [CartController::class, 'getCartProducts']);
 });
+
 
 // Products Controller
 Route::get('/allProducts',[ProductsController::class,'allProducts']);
