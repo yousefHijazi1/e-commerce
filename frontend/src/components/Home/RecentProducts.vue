@@ -3,9 +3,9 @@
     <div class="container-fluid pt-5 pb-3">        
         <div class="d-flex justify-content-between align-items-center mx-xl-5 mb-4">
             <h2 class="section-title position-relative text-uppercase mb-0" id="recent-products-title" >
-                <span class="bg-light pr-3">Recent Products</span>
+                <span class="bg-light p-1">Recent Products</span>
             </h2>
-            <router-link to="/shop" class="bg-light text-custom p-2" id="view">View All Products</router-link>
+            <router-link to="/shop" class="bg-light text-custom p-1" id="view">View All Products</router-link>
         </div>
         <div class="row px-xl-5">
             <div  v-for="product in displayedProducts" :key="product.id" class="col-lg-3 col-md-4 col-sm-6 pb-1" id="card">
