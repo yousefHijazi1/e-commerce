@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller{
 
@@ -16,16 +17,14 @@ class AuthController extends Controller{
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class),],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'min:8'],
-            'phone' => ['required', 'string', 'max:255'],
-
+            'phone' => ['required', 'string', 'max:255','min:8',],
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Please insert all fields',
                 'errors' => $validator->errors()->toArray(),
                 'code' => 400
             ]);
