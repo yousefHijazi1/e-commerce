@@ -109,7 +109,7 @@ export default {
                 this.$router.push({ path: '/auth', query: { message: 'You must login to add products to cart' }});
                 console.log('not authenticated')
             } else {
-                console.log(userId);
+                console.log('user ID: ' + userId);
                 const payload = {
                     user_id: userId,
                     product_id: productId,

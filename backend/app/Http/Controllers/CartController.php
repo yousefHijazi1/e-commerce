@@ -5,26 +5,60 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class CartController extends Controller
 {
     public function addToCart(Request $request){
-
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
         ]);
 
-        $cartItem = Cart::create([
-            'user_id' => $validatedData['user_id'],
-            'product_id' => $validatedData['product_id'],
-            'quantity' => $validatedData['quantity'],
-        ]);
+        DB::beginTransaction();
 
-        return response()->json(['message' => 'Product added to cart successfully', 'cartItem' => $cartItem], 201);
+        try {
+            $cartItem = $this->checkIfProductInCart($validatedData['user_id'], $validatedData['product_id']);
+
+            if ($cartItem) {
+                // If the product is already in the cart, update the quantity
+                $cartItem->quantity += $validatedData['quantity'];
+                if (!$cartItem->save()) {
+                    throw new \Exception('Failed to update product quantity in cart');
+                }
+
+                DB::commit();
+                return response()->json(['message' => 'Product quantity updated successfully', 'cartItem' => $cartItem], 200);
+            } else {
+                // If the product is not in the cart, create a new cart item
+                $cartItem = Cart::create([
+                    'user_id' => $validatedData['user_id'],
+                    'product_id' => $validatedData['product_id'],
+                    'quantity' => $validatedData['quantity'],
+                ]);
+
+                if (!$cartItem) {
+                    throw new \Exception('Failed to add product to cart');
+                }
+
+                DB::commit();
+                return response()->json(['message' => 'Product added to cart successfully'], 201);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
-    public function getCartProducts($userId){
+    private function checkIfProductInCart($userId, $productId){
+        return Cart::where('user_id', $userId)
+                    ->where('product_id', $productId)
+                    ->first();
+    }
+
+    public function getCartProducts($userId) {
         // Fetch products and their quantities from the cart where user_id matches the given $userId
         $products = Product::whereIn('products.id', function($query) use ($userId) {
                             $query->select('product_id')

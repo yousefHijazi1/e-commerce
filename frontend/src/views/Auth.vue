@@ -133,21 +133,23 @@ export default {
         try {
               const response = await axios.post('http://127.0.0.1:8000/api/login', this.loginData);
               if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('role', response.data.user.role);
-                localStorage.setItem('auth_id',response.data.user.id);
-                const userID = localStorage.getItem('auth_id');
+                  localStorage.setItem('token', response.data.token);
+                  localStorage.setItem('role', response.data.user.role);
+                  localStorage.setItem('auth_id',response.data.user.id);
+                  
+                  const userID = localStorage.getItem('auth_id');
 
-                if (response.data.user.role === 'admin') {
-                    this.$router.push('/admin');
+                  if (response.data.user.role === 'admin') {
+                      this.$router.push('/admin');
 
-                }else {
-                  this.$router.push(`/cart/${userID}`);
-                }
+                  }else {
+                    this.$router.push(`/cart/${userID}`);
+                  }
               }
 
               this.message = response.data.message;
               console.log(this.message);
+
             } catch (error) {
               this.errors = error.response.data.errors;
               console.log(this.errors);
@@ -162,6 +164,7 @@ export default {
                     this.registerData.password = '';
                     this.registerData.password_confirmation = '';
                     this.registered = response.data.message;
+
                     if(response.data.code == 400){
                         this.errors = response.data.errors
                     }else{

@@ -7,26 +7,26 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form @submit.prevent="submitForm" id="contactForm" >
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" placeholder="Your Name"
-                                required="required" data-validation-required-message="Please enter your name" />
+                                required="required" data-validation-required-message="Please enter your name" v-model="formData.name" value=/>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="email" class="form-control" id="email" placeholder="Your Email"
-                                required="required" data-validation-required-message="Please enter your email" />
+                                required="required" data-validation-required-message="Please enter your email" v-model="formData.email" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="text" class="form-control" id="subject" placeholder="Subject"
-                                required="required" data-validation-required-message="Please enter a subject" />
+                                required="required" data-validation-required-message="Please enter a subject" v-model="formData.subject" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <textarea class="form-control" rows="8" id="message" placeholder="Message"
                                 required="required"
-                                data-validation-required-message="Please enter your message"></textarea>
+                                data-validation-required-message="Please enter your message" v-model="formData.message" ></textarea>
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
@@ -56,9 +56,53 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: 'FormComponent'
-}
+    name: 'FormComponent',
+    data(){
+        return{
+            formData:{
+                name:'',
+                email:'',
+                subject:'',
+                message:''
+            },
+            resultMessage:''
+        }
+    },
+
+    methods:{
+        async submitForm(){
+            console.log(this.formData);
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/sendMessage', this.formData);
+                    this.formData.name = '';
+                    this.formData.email = '';
+                    this.formData.subject = '';
+                    this.formData.message = '';
+                    
+                    this.resultMessage = response.data.message;
+
+                    if(response.data.code == 400){
+                        this.errors = response.data.errors
+                    }else{
+                        this.resultMessage = response.data.message;
+                        console.log(this.resultMessage);
+                        setTimeout(() => {
+                            this.message = '';
+                        }, 4000)
+                        this.errors = {};
+                    }
+                    }catch (error) { 
+                        console.log(error)
+                    } 
+            },
+        }
+    }
+    
+
+
 </script>
 <style lang="">
     

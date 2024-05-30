@@ -15,6 +15,7 @@
     "bootstrap": "^4.5.3",
     "core-js": "^3.8.3",
     "jquery": "^3.7.1",
+    "mitt": "^3.0.1",
     "swiper": "^11.1.1",
     "vue": "^3.2.13",
     "vue-owl-carousel": "^2.0.3",

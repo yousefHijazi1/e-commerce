@@ -43,7 +43,7 @@
                     <h2>Your cart is empty !</h2>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4" v-if="products.length > 0">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-light pr-3">Cart Summary</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
@@ -117,9 +117,14 @@ export default {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(response.data.message);
                 this.message = response.data.message;
-                this.getProducts();
+                console.log(this.message);
+
+                if(this.products.length -1 < 1){
+                    this.products =''
+                }else{
+                    this.getProducts();
+                }
             } catch (error) {
                 console.log(error);
             }
