@@ -7,6 +7,7 @@ import Cart from '../views/Cart';
 import Checkout from '../views/Checkout';
 import Shop from '../views/Shop';
 import Category from '../views/Category';
+import Order from '../views/Order';
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path:'/details/:id',
     name:'details',
     component: ItemDetails
+  },
+  {
+    path:'/create-order/',
+    name:'order',
+    component: Order
   },
   {
     path:'/auth',

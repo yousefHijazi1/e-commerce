@@ -5,6 +5,10 @@
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-light pr-3">Contact Us</span></h2>
         <div class="row px-xl-5">
             <div class="col-lg-7 mb-5">
+                <div v-if="resultMessage" :class="alertClass" role="alert">
+                    <p>{{ resultMessage }}</p>
+                </div>
+                
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
                     <form @submit.prevent="submitForm" id="contactForm" >
@@ -68,7 +72,17 @@ export default {
                 subject:'',
                 message:''
             },
-            resultMessage:''
+            resultMessage:'',
+            code : 0,
+        }
+    },
+    computed: {
+        alertClass() {
+            return {
+                'alert': true,
+                'alert-primary': this.code === 200,
+                'alert-danger': this.code !== 200
+            };
         }
     },
 
@@ -83,6 +97,7 @@ export default {
                     this.formData.message = '';
                     
                     this.resultMessage = response.data.message;
+                    this.code = response.data.code;
 
                     if(response.data.code == 400){
                         this.errors = response.data.errors

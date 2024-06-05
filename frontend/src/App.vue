@@ -28,13 +28,11 @@
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                     <div class="navbar-nav w-100">
-                        
                         <router-link to="/category/laptops"  class="nav-item nav-link">Laptops</router-link>
                         <router-link to="/category/desktops"  class="nav-item nav-link">Desktops</router-link>
                         <router-link to="/category/playstations"  class="nav-item nav-link">Playstations</router-link>
                         <router-link to="/category/accessories"  class="nav-item nav-link">Accessories</router-link>
                         <router-link to="/category/drones"  class="nav-item nav-link">Drones</router-link>
-                        
                     </div>
                 </nav>
             </div>
@@ -49,13 +47,11 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            
-                            <router-link to="/"  class="nav-item nav-link active" @click="closeNavbar" >Home</router-link>
-                            
+                            <router-link to="/"  class="nav-item nav-link active" @click="closeNavbar">Home</router-link>
                             <router-link to="/shop" class="nav-item nav-link" @click="closeNavbar">Shop</router-link>
                             
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
+                                <a  class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-custom rounded-0 border-0 m-0" id="pages">
                                     <router-link v-if="userId" :to="'/cart/' + userId" class="dropdown-item" id="cart" @click="closeNavbar">Shopping Cart</router-link>
                                     <router-link v-else to="/auth" class="dropdown-item" id="cart" @click="closeNavbar">Shopping Cart</router-link>
@@ -64,23 +60,30 @@
                             </div>
                             
                             <router-link to="/contact"  class="nav-item nav-link" @click="closeNavbar">Contact</router-link>
-                            <router-link to="/auth"  class="btn btn-light" v-if="!auth && displayButtons" @click="closeNavbar">Login / Register</router-link>
                             
+                            <!-- Single router-link for small screens when displayButtons is true -->
+                            <router-link v-if="displayButtons" :to="cartOrAuthPath" class="nav-item nav-link" @click="closeNavbar">
+                                <i class="fas fa-shopping-cart fs-4 text-light mr-1"></i>
+                                <span class="badge text-light border border-light rounded-circle" style="padding-bottom: 2px;">
+                                    {{ userId ? productsCount : 0 }}
+                                </span>
+                            </router-link>
+
+                            <router-link to="/auth"  class="btn btn-light" v-if="!auth && displayButtons" @click="closeNavbar">Login / Register</router-link>
                             <button class="btn btn-light mr-2" @click="logout" v-if="auth && displayButtons" >Logout</button>
                         </div>
-                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                            
+
+                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block"> 
                             <router-link to="/auth" class="btn btn-dark ml-2 mr-2" v-if="!auth" @click="closeNavbar" id="login">Login / Register</router-link>
                             <button class="btn btn-dark mr-2" @click="logout" v-if="auth" id="logout">Logout</button>
 
-                            <router-link v-if="userId" :to="'/cart/' + userId" class="btn px-0 " @click="closeNavbar">
-                                <i class="fas fa-shopping-cart text-light mr-1"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{ productsCount }}</span>
+                            <router-link :to="cartOrAuthPath" class="btn px-0" @click="closeNavbar">
+                                <i class="fas fa-shopping-cart fs-4 text-light mr-1"></i>
+                                <span class="badge text-light border border-light rounded-circle" style="padding-bottom: 2px; font-size: 1rem">
+                                    {{ userId ? productsCount : 0 }}
+                                </span>
                             </router-link>
-                            <router-link v-else :to="'/auth'" class="btn px-0 " @click="closeNavbar">
-                                <i class="fas fa-shopping-cart text-light mr-1"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </router-link>
+
                         </div>
                     </div>
                 </nav>
@@ -88,8 +91,9 @@
         </div>
     </div>
 
-    <div class="mb-2 mt-2">
-        <div class="col-lg-12 col-md-12 col-sm-12 text-left">
+    
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-left mb-2 mt-2">
             <form @submit.prevent="search">
                 <div class="input-group">
                 <input ref="input" type="text" class="form-control" placeholder="Search for products" v-model="searchInput" @input="suggestedNames">
@@ -110,20 +114,18 @@
     </div>
     <!-- Navbar End -->
 
-    <router-view>
-
-    </router-view>
+    <router-view></router-view>
 </template>
 
 <script>
 import axios from 'axios';
-
-
-
 export default {
-    
+
     mounted() {
+        this.cartCount();
+        
         this.checkAuth();
+
         // Check screen size when component is mounted
         if (window.innerWidth < 990) {
             this.displayButtons = true; // Set displayButtons to false if screen is less than 992px
@@ -143,17 +145,23 @@ export default {
         };
     },
     created(){
+        this.cartCount();
+
         if(localStorage.getItem('auth_id')){
             this.userId = localStorage.getItem('auth_id');
         }
     },
-    
+    computed:{
+        cartOrAuthPath() {
+            return this.userId ? `/cart/${this.userId}` : '/auth';
+        }
+    },
     methods: {
         closeNavbar() {
             const navbarCollapse = document.querySelector(".navbar-collapse");
-            if (navbarCollapse.classList.contains("show")) {
-                navbarCollapse.classList.remove("show");
-            }
+                if (navbarCollapse.classList.contains("show")) {
+                    navbarCollapse.classList.remove("show");
+                }
         },
         search() {
             //Navigate to Gategoriy view with search input without suggestion
@@ -182,23 +190,23 @@ export default {
             },
             
             selectProduct(product) {
-            // Set the search input to the selected product name
-            this.searchInput = product;
+                // Set the search input to the selected product name
+                this.searchInput = product;
 
-            // Navigate to the category route when a suggestion is clicked
-            fetch(`http://127.0.0.1:8000/api/getProductCategory/${product}`)
-                .then(response => response.json())
-                .then(data => {
-                        const category = data.category; // Access category from the response data
-                        this.showSuggestions = false;
-                        this.$router.push({ path: `/category/${category}` });
-                    })
-                .catch(error => console.error('Error fetching category:', error));
+                // Navigate to the category route when a suggestion is clicked
+                fetch(`http://127.0.0.1:8000/api/getProductCategory/${product}`)
+                    .then(response => response.json())
+                    .then(data => {
+                            const category = data.category; // Access category from the response data
+                            this.showSuggestions = false;
+                            this.$router.push({ path: `/category/${category}` });
+                        })
+                    .catch(error => console.error('Error fetching category:', error));
             },
             async logout() {
                     try {
-                    const token = localStorage.getItem("token");
-                    const response = await axios.post("http://127.0.0.1:8000/api/logout",null,
+                        const token = localStorage.getItem("token");
+                        const response = await axios.post("http://127.0.0.1:8000/api/logout",null,
                                 {
                                     headers: {
                                         Authorization: `Bearer ${token}`,
@@ -209,6 +217,7 @@ export default {
                             localStorage.removeItem("token");
                             localStorage.removeItem('auth_id');
                             localStorage.removeItem('role');
+                            
                             this.userId = '';
                             this.auth = false;
                             this.$router.push("/");
@@ -225,21 +234,24 @@ export default {
                     }
                 },
 
-                async cartCount(){
-                    const userId = localStorage.getItem('auth_id');
-                    console.log(userId);
-                    if (!userId) {
+                async cartCount() {
+                    const token = localStorage.getItem('token');
+                    if (!this.userId || !token) {
                         this.productsCount = 0;
+                        return;
                     }
-                    
                     try {
-                        const response = await axios.get('http://127.0.0.1:8000/api/count/'+ userId);
+                        const response = await axios.get(`http://127.0.0.1:8000/api/count/${this.userId}`, {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        });
                         this.productsCount = response.data.products_count;
-                        // console.log(this.productsCount);
                     } catch (error) {
                         console.log(error);
+                        this.productsCount = 0;
                     }
-                }
+                },
         }
 };
 

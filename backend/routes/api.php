@@ -9,10 +9,14 @@ use App\Http\Controllers\UserController;
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
+
     Route::post('/cart',[CartController::class,'addToCart']);
-    Route::delete('/remove/{id}',[CartController::class,'delete']);
     Route::get('/count/{user_id}',[CartController::class,'getCount']);
     Route::get('/cart/products/{userId}', [CartController::class, 'getCartProducts']);
+    Route::delete('/remove/{id}',[CartController::class,'delete']);
+
+    Route::post('/createOrder',[UserController::class,'createOrder']);
+
 });
 
 

@@ -137,13 +137,19 @@ export default {
                   localStorage.setItem('role', response.data.user.role);
                   localStorage.setItem('auth_id',response.data.user.id);
                   
-                  const userID = localStorage.getItem('auth_id');
+                  // const userID = localStorage.getItem('auth_id');
 
                   if (response.data.user.role === 'admin') {
-                      this.$router.push('/admin');
-
-                  }else {
-                    this.$router.push(`/cart/${userID}`);
+                      this.$router.push('/admin').then(() => {
+                        window.location.reload()
+                      });
+                      
+                    }else {
+                      this.$router.push('/shop').then(() => {
+                        window.location.reload()
+                      });
+                    
+                    // this.$router.push(`/cart/${userID}`);
                   }
               }
 

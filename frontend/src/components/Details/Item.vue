@@ -48,73 +48,25 @@
                     </div>
 
                     <p class="mb-4">{{ product.description }}</p>
-                    <div class="d-flex mb-3">
-                        <strong class="text-dark mr-3">Sizes:</strong>
-                        <form>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                <label class="custom-control-label" for="size-1">XS</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-2" name="size">
-                                <label class="custom-control-label" for="size-2">S</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-3" name="size">
-                                <label class="custom-control-label" for="size-3">M</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-4" name="size">
-                                <label class="custom-control-label" for="size-4">L</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="size-5" name="size">
-                                <label class="custom-control-label" for="size-5">XL</label>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="d-flex mb-4">
-                        <strong class="text-dark mr-3">Colors:</strong>
-                        <form>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                <label class="custom-control-label" for="color-1">Black</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-2" name="color">
-                                <label class="custom-control-label" for="color-2">White</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-3" name="color">
-                                <label class="custom-control-label" for="color-3">Red</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-4" name="color">
-                                <label class="custom-control-label" for="color-4">Blue</label>
-                            </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-5" name="color">
-                                <label class="custom-control-label" for="color-5">Green</label>
-                            </div>
-                        </form>
-                    </div>
+                    
                     <div class="d-flex align-items-center mb-4 pt-2">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
-                                <button class="btn btn-custom btn-minus">
+                                <button class="btn btn-custom btn-minus" @click="decrement">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-light border-0 text-center" value="1">
+                            <input type="text" class="form-control bg-light border-0 text-center" :value="quantity" readonly>
                             <div class="input-group-btn">
-                                <button class="btn btn-custom btn-plus">
+                                <button class="btn btn-custom btn-plus" @click="increment">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-custom px-3"  @click="addToCart(product.id)" ><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                        <button class="btn btn-custom px-3 mr-1"  @click="makeOrder(product.id)" ><i class="fa fa-shopping-cart mr-1"></i> Buy </button>
+                        <button class="btn bg-light text-custom px-3"  @click="addToCart(product.id)" style="border:solid 1px " ><i class="fa fa-shopping-cart mr-1 "></i> Add To Cart</button>
                     </div>
-                    <div class="d-flex pt-2">
+                    <div class="d-flex pt-2">   
                         <strong class="text-dark mr-2">Share on:</strong>
                         <div class="d-inline-flex">
                             <a class="text-dark px-2" href="">
@@ -166,7 +118,7 @@
                                         <li class="list-group-item px-0">
                                             Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
                                         </li>
-                                      </ul> 
+                                    </ul> 
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
@@ -182,7 +134,7 @@
                                         <li class="list-group-item px-0">
                                             Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
                                         </li>
-                                      </ul> 
+                                    </ul> 
                                 </div>
                             </div>
                         </div>
@@ -259,6 +211,7 @@ export default {
     data(){
         return{
             product:{},
+            quantity: 1
         }
     },
     props: {
@@ -308,6 +261,26 @@ export default {
                     console.error('Error adding product to cart:', error);
                     alert('Failed to add product to cart');
                 });
+            }
+        },
+        increment() {
+            this.quantity++;
+        },
+        decrement() {
+            if (this.quantity > 1) {
+                    this.quantity--;
+            }
+        },
+
+        async makeOrder(productId){
+            const user_id = localStorage.getItem('auth_id');
+            const product_id = productId;
+            let quantity = this.quantity;
+
+            if(user_id && product_id && quantity){
+                this.$router.push({ path: '/create-order', query: { user_id , product_id , quantity }});
+            }else{
+                this.$router.push({ path: '/auth', query: { message: 'You must login to buy products' }});
             }
         }
     }
